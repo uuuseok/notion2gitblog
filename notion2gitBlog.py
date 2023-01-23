@@ -36,8 +36,6 @@ args,_ = parser.parse_known_args()
 
 
 
-
-
 def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
     # date & fileName #
     fileName = datetime.now(timezone("Asia/seoul")).strftime("%Y-%m-%d-%H%M%S-")+title+".md"
@@ -93,7 +91,7 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
     # md 파일 삭제
     os.remove(md_path)
 
-
+    ##### md 파일 수정 #####
     # md 파일에서 작성된 이미지 첨부 문자 조회
     start = [x.start() for x in re.finditer("!\[Untitled\]\(",text)] # 이미지 첨부 문자 시작 위치
     end = [x.end() for x in re.finditer("png[)]",text)] # 이미지 첨부 문자 끝 위치
@@ -110,8 +108,12 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
 
 
     # 내 테마에서만 그런건지 모르겠지만, header가 ## 부터 시작함. # 하나를 추가
-    text = text.replace("####",'❶❶❶❶❶').replace("###","❷❷❷❷").replace("##","❸❸❸").replace("#",'❹❹').\
-    replace("❶❶❶❶❶","#####").replace("❷❷❷❷","####").replace("❸❸❸","###").replace("❹❹",'##')
+    text = text.replace("####",'❶').replace("###","❷").replace("##","❸").replace("#",'❹').\
+    replace("❶","#####").replace("❷","####").replace("❸","###").replace("❹",'##')
+
+
+    # 숫자 리스트 사이에 개행이 세 줄이고, 세 줄 안에 텍스트가 있으면 숫자 증가가 안 되는 문제
+    text = re.sub("\n\n(\d)", "\n<br><br>\\1", text)
 
 
     # yfm 

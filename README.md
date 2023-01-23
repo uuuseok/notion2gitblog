@@ -15,8 +15,8 @@ notion(ver 2.1.4)에서 작성하여 export한 페이지를 github blog에 포�
 - 명령어는 notion2gitblog 디렉토리에서 실행되어야 하며, notion2gitblog 디렉토리가 존재하는 경로에 exportNotionPage, {username}.github.io 까지 총 3개의 디렉토리만 존재해야 합니다.
     - notion2gitblog 디렉토리는 본 notion2gitBlog.py가 있는 디렉토리이고,
     - exportNotionPage는 notion에서 내보내기 한 zip 파일을 저장할 임시저장소 입니다.<br>
-    (포스팅 할 zip 파일 하나만 있어야 합니다. 명령어 입력 후에는 항상 비워져 있어야 합니다.)
-    ![image](https://user-images.githubusercontent.com/118060948/213067454-4b29af64-08de-44fd-94ad-d4f595f10a60.png)
+    (포스팅 할 zip 파일 하나만 있어야 합니다. 명령어 입력 후에는 항상 비워져 있어야 합니다.)<br>
+![image](https://user-images.githubusercontent.com/118060948/213067454-4b29af64-08de-44fd-94ad-d4f595f10a60.png)
 
 - {username}.github.io/_assets/images 경로에 postImages 디렉토리를 생성해야 합니다.
 위 경로에 이미지 디렉토리가 이동됩니다.
