@@ -108,8 +108,13 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
 
 
     # 내 테마에서만 그런건지 모르겠지만, header가 ## 부터 시작함. # 하나를 추가
-    text = text.replace("####",'❶').replace("###","❷").replace("##","❸").replace("#",'❹').\
-    replace("❶","#####").replace("❷","####").replace("❸","###").replace("❹",'##')
+    header_1 = [x.start() for x in re.finditer("^#\s",text)]
+    if header_1[0] == 0:
+        text = re.sub("^#\s", "## ", text) #노션페이지 최상단 header1
+
+    text = re.sub("\n[^#]###\s","\n\n#### ",text)
+    text = re.sub("\n[^#]##\s","\n\n### ",text)
+    text = re.sub("\n[^#]#\s","\n\n## ",text)
 
 
     # 숫자 리스트 사이에 개행이 세 줄이고, 세 줄 안에 텍스트가 있으면 숫자 증가가 안 되는 문제
