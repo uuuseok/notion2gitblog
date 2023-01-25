@@ -116,6 +116,11 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
     text = re.sub("\n\n(\d)", "\n<br><br>\\1", text)
 
 
+    # aside 적용이 안 됨. aside 태그를 하이라이트로 변경
+    text = re.sub("<aside>", "```", text)
+    text = re.sub("</aside>", "```", text)
+
+
     # yfm 
     global yfm
     yfm = yfm.format(title, subtitle, categories, tags)
