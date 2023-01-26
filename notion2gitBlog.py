@@ -91,7 +91,8 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
     # md 파일 삭제
     os.remove(md_path)
 
-    ##### md 파일 수정 #####
+
+    ########## md 파일 수정 ##########
     # md 파일에서 작성된 이미지 첨부 문자 조회
     start = [x.start() for x in re.finditer("!\[Untitled\]\(",text)] # 이미지 첨부 문자 시작 위치
     end = [x.end() for x in re.finditer("png[)]",text)] # 이미지 첨부 문자 끝 위치
@@ -111,6 +112,8 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
     header_1 = [x.start() for x in re.finditer("^#\s",text)]
     if header_1[0] == 0:
         text = re.sub("^#\s", "## ", text) #노션페이지 최상단 header1
+    else:
+        pass
 
     text = re.sub("\n[^#]###\s","\n\n#### ",text)
     text = re.sub("\n[^#]##\s","\n\n### ",text)
@@ -126,10 +129,48 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
     text = re.sub("</aside>", "```", text)
 
 
+    ##### 테이블 안의 문자 중 개행 문자가 있으면 테이블이 그려지지 않는 문제 #####
+    # 각 테이블의 첫 행 시작지점
+    f = [x.start() for x in re.finditer("\n\n\|",text)]
+    f = list(map(lambda x : x+2, f))
+
+    # 각 테이블의 마지막 행 끝지점
+    vb = [x.start() for x in re.finditer(" \|",text)]
+    vb = list(map(lambda x: x+1, vb))
+    if len(f) == 0:
+        pass
+    elif len(f) == 1:
+        l1 = vb[-1]
+    else:
+        for i in range(len(f)-1):
+            globals()['l{}'.format(i+1)] = [x if (x<f[i+1]) & (x>=f[i]) else 0 for x in vb]
+            globals()['l{}'.format(i+1)] = sorted(globals()['l{}'.format(i+1)],reverse=True)[:sorted(globals()['l{}'.format(i+1)],reverse=True).index(0)][0]
+        globals()['l{}'.format(i+2)] = vb[-1]
+
+    # 각 테이블의 시작과 끝
+    for i in range(len(f)):
+        globals()["t{}".format(i+1)] = text[f[i]:globals()["l{}".format(i+1)]+1]
+    
+    # 각 테이블의 끝에 개행 붙여줌
+    for i in range(len(f)):
+        text = text.replace(globals()["t{}".format(i+1)],globals()["t{}".format(i+1)]+"\n")
+
+
+    # 테이블 내부의 개행 표시를 <br> 태그로 바꿔줌
+    for i in range(len(f)):
+        text = text.replace(globals()["t{}".format(i+1)], re.sub("([^|])\n", "\\1<br>", globals()["t{}".format(i+1)]))
+
+    ##### /테이블 안의 문자 중 개행 문자가 있으면 테이블이 그려지지 않는 문제 #####
+
+
     # yfm 
     global yfm
     yfm = yfm.format(title, subtitle, categories, tags)
     text = yfm + text
+
+
+    ########## /md 파일 수정 ##########
+
 
     # .../_posts 디렉토리에 변경된 md파일 저장
     with open(glob(parDir+"/[!notion2gitblog|!exportNotionPage]*")[0]+"/_posts/"+fileName,'w') as f:

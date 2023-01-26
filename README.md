@@ -38,7 +38,7 @@ notion(ver 2.1.4)에서 작성하여 export한 페이지를 github blog에 포�
 
 ---
 
-### 작동
+### 기능
 
 - notion에서 내보내기 하여 exportNotionPage에 저장한 zip 파일 압축해제 및 zip 파일 삭제
 - 이미지가 들어있는 폴더를 “%Y-%m-%d-%H%M%S-{title}”로 이름을 변경하여 {username}.github.io/assets/images/postImages에 이동
@@ -47,6 +47,7 @@ notion(ver 2.1.4)에서 작성하여 export한 페이지를 github blog에 포�
     - md 파일에 작성되어 있는 이미지 첨부 텍스트를 바뀐 경로로 변경
     - 숫자 리스트 사이에 개행이 세 줄이고, 세 줄 안에 텍스트가 있으면 숫자 증가가 안 되는 문제 해결
     - aside 적용이 안 됨. aside 태그를 하이라이트로 변경
+    - 테이블 안의 문자 중 개행 문자가 있으면 테이블이 그려지지 않는 문제 해결
     - 작성한 yfm을 상단에 추가
 - md 파일 삭제 후, {username}.github.io/_post에 수정된 md 파일을 “%Y-%m-%d-%H%M%S-{title}.md” 형식으로 생성
 
