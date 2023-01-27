@@ -38,7 +38,7 @@ args,_ = parser.parse_known_args()
 
 def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
     # date & fileName #
-    fileName = datetime.now(timezone("Asia/seoul")).strftime("%Y-%m-%d-%H%M%S-")+title+".md"
+    fileName = datetime.now(timezone("Asia/seoul")).strftime("%Y-%m-%d-%H%M%S-")+re.sub("&"," ",title)+".md"
 
     # notion2gitblog, exportNotionPage, {username}.github.io 디렉토리가가 있는 경로의 부모 디렉토리
     parDir = os.path.abspath(os.path.join(os.getcwd(),os.pardir))
