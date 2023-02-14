@@ -74,7 +74,7 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
         createTime = "-".join(img_path.split('/')[-1].split('-')[:4])
 
         # 폴더 안 이미지를 순서대로 정렬 [Untitled.png, Untitled 1.png, Untitled 2.png, ...]
-        sorted_img_path = glob(os.path.abspath(os.path.join(img_path,os.pardir))+"/{}*/*".format(createTime))
+        sorted_img_path = sorted(glob(os.path.abspath(os.path.join(img_path,os.pardir))+"/{}*/*".format(createTime)))
         ordered_li = list(map(lambda x : x.split('/')[-1].split('.')[0][9:], sorted_img_path))
         ordered_li[-1] = '0'
         ordered_li = list(map(int,ordered_li))
