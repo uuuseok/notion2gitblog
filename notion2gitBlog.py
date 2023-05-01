@@ -59,8 +59,8 @@ def notion2gitblog(title:str, subtitle:str, categories:str, tags:str):
 
     ##### 경로 이동 #####
     # 이미지 폴더 경로
-    folder_path = glob(parDir+"/exportNotionPage/*[!.md]")
-
+    # folder_path = glob(parDir+"/exportNotionPage/*[!.md]") #glob 표현식이 잘못된건지 .md 파일을 제외한 디렉토리를 인식하지 못하는 경우 발견. 밑의 코드로 교체
+    folder_path = [sorted(glob(parDir+"/exportNotionPage/*"))[0]]
 
     #폴더를 블로그 내부 경로로 이동
     if folder_path == []:
